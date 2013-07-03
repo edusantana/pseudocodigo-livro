@@ -1,0 +1,19 @@
+programa = (instrucao)+
+
+instrucao = (sp)* (leia / se / escreva) (sp)*
+
+leia ="LEIA" sp* variavel
+variavel =([a-z]/"_")+ ([a-z]/[0-9]/"_")*
+
+sp = " " / "\n" / "\t"
+se = "SE" sp* comparacao sp* "ENTÃO" instrucao "SENÃO" instrucao
+/ "SE" sp* comparacao sp* "ENTÃO" instrucao
+
+escreva = "ESCREVA" sp* string
+
+comparacao = expressao comp_op expressao
+expressao = sp* (numero/variavel) sp*
+comp_op = "<" / ">="
+numero = [0-9]+
+string = "\"" (!["] char)* "\""
+char = " " / [a-z] / [A-Z] / [á-ú]/[0-9]
