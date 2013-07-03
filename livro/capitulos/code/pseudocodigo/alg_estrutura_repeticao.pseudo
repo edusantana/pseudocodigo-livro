@@ -1,0 +1,7 @@
+ENQUANTO nota <> -1 FAÇA
+ LEIA nota
+ SE nota >= 7 ENTÃO
+   ESCREVA "Aprovado"
+ SENÃO
+   ESCREVA "Reprovado"
+FIM_ENQUANTO 
