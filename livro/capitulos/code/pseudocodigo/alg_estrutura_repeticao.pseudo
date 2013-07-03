@@ -1,4 +1,4 @@
-ENQUANTO nota <> -1 FAÇA
+ENQUANTO nota != -1 FAÇA
  LEIA nota
  SE nota >= 7 ENTÃO
    ESCREVA "Aprovado"
