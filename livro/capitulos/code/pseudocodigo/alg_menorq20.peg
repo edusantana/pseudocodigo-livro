@@ -1,0 +1,13 @@
+programa= sp* instrucao* sp*
+
+instrucao=leia
+		/se
+		/escreva
+
+leia="LEIA" sp* variavel
+variavel=([a-z]/"_")+ ([a-z]/[0-9]/"_")*
+
+sp = " "/"\n"/"\t"
+
+
+
