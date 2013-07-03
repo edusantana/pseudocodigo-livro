@@ -1,11 +1,11 @@
 programa = (instrucao)+
 
 instrucao = (sp)* (leia / se / escreva) (sp)*
+sp = " " / "\n" / "\t"
 
 leia ="LEIA" sp* variavel
 variavel =([a-z]/"_")+ ([a-z]/[0-9]/"_")*
 
-sp = " " / "\n" / "\t"
 se = "SE" sp* comparacao sp* "ENTÃO"
 escreva = "ESCREVA" sp* string
 
