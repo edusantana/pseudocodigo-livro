@@ -1,31 +1,39 @@
-programa = (instrucao)+
+programa = expLogica+
+instrucao = (sp)* (declaracao/atribuicao/leia/escreva/se) (sp)*
+declaracao = declaracaoConstante / declaracaoVariavel
+declaracaoConstante = "CONSTANTE" sp+ identificadorCONSTANTE sp* "=" sp* expressao
+declaracaoVariavel = ("DECLARE"/"DECLARA") sp+ identificadorVariavel sp* ("," sp* identificadorVariavel)* ":" sp* tipo
+atribuicao = identificadorVariavel sp* "=" sp* expressao
 
-instrucao = (sp)* (leia / se / escreva / enquanto / constante / para) (sp)*
+leia = "LEIA" sp+ identificadorVariavel
+escreva = "ESCREVA" sp+ (string/variavel)
+se = "SE" sp* expLogica sp* "ENTÃO" instrucao "SENÃO" instrucao
+/ "SE" sp* expLogica sp* "ENTÃO" instrucao
 
-enquanto="ENQUANTO" comparacao "FAÇA" bloco "FIM_ENQUANTO"
 
-bloco = instrucao*
+expressao= sp* fator expAdicao* sp*
+expAdicao= ('+'/'-') sp* fator sp*
+fator = primario expMultiplicacao* sp*
+expMultiplicacao = ('*'/'/') sp* primario sp*
+primario = (parenteses / numero / variavel / '-' primario) sp*
+parenteses = '(' expressao ')' sp*
+variavel = identificadorCONSTANTE / identificadorVariavel
 
-leia ="LEIA" sp* variavel
-variavel =([a-z]/"_")+ ([a-z]/[0-9]/"_")*
-constante = "CONSTANTE" (sp)+ identConstante (sp)* "=" expressao
-identConstante = ([A-Z]/"_")+
-identVariavel = ([a-z]/"_")+ ([a-z]/[0-9]/"_")*
+expLogica = (expLogicaQuaternario)+
+expLogicaQuaternario = expLogicaTerciario ("OU" expLogicaTerciario)*
+expLogicaTerciario = expLogicaSecundario ("E" expLogicaSecundario)*
+expLogicaSecundario = ("NÃO")? expLogicaPrimario
+expLogicaPrimario = expressao opComparacao expressao / sp* "(" expLogica ")"
+opComparacao = ">=" / "<=" / "==" / "!=" / "<" / ">"
 
-sp = " " / "\n" / "\t"
-se = "SE" sp* comparacao sp* "ENTÃO" instrucao "SENÃO" instrucao
-/ "SE" sp* comparacao sp* "ENTÃO" instrucao
-para = "PARA" (sp)+ atribuicao "ATÉ" expressao "FAÇA" bloco "FIM_PARA"
 
-atribuicao = identVariavel (sp)* "=" expressao
+numero = ("-")? digito+
+identificadorCONSTANTE = ([A-Z]/"_")+
+identificadorVariavel = ([a-z]/"_")+ ([a-z]/"_"/[A-Z]/[0-9])*
+tipo = "NUMERO"/"TEXTO"
 
-escreva = "ESCREVA" sp* string
 
-comparacao = expressao comp_op expressao
-expressao = sp* unario? (numero/identConstante/identVariavel) sp*
-unario = "-" / "+"
-comp_op = "<" / ">=" / "!="
-numero = [0-9]+
-string = "\"" (!["] char)* "\""
-char = " " / [a-z] / [A-Z] / [á-ú]/[0-9]
-
+digito = [0-9]
+sp = " " / "\t" / "\n"
+string = aspas (!aspas .)* aspas
+aspas = "\""
