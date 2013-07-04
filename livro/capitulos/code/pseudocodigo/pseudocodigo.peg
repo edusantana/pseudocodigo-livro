@@ -1,4 +1,4 @@
-programa = expLogica+
+programa = instrucao+
 instrucao = (sp)* (declaracao/atribuicao/leia/escreva/se) (sp)*
 declaracao = declaracaoConstante / declaracaoVariavel
 declaracaoConstante = "CONSTANTE" sp+ identificadorCONSTANTE sp* "=" sp* expressao
@@ -19,13 +19,15 @@ primario = (parenteses / numero / variavel / '-' primario) sp*
 parenteses = '(' expressao ')' sp*
 variavel = identificadorCONSTANTE / identificadorVariavel
 
-expLogica = (expLogicaQuaternario)+
-expLogicaQuaternario = expLogicaTerciario ("OU" expLogicaTerciario)*
-expLogicaTerciario = expLogicaSecundario ("E" expLogicaSecundario)*
+expLogica = sp* fatorLogico expOU* sp*
+expOU = "OU" sp* fatorLogico sp*
+fatorLogico = expLogicaPrimario expE*
+expMultiplicacao = ('*'/'/') sp* primario sp*
+expE = "E" sp* expLogicaPrimario sp*
 expLogicaSecundario = ("NÃO")? expLogicaPrimario
-expLogicaPrimario = expressao opComparacao expressao / sp* "(" expLogica ")"
+expLogicaPrimario = (parenteses_logico / (expressao opComparacao expressao))
+parenteses_logico = "(" expLogica ")"
 opComparacao = ">=" / "<=" / "==" / "!=" / "<" / ">"
-
 
 numero = ("-")? digito+
 identificadorCONSTANTE = ([A-Z]/"_")+
