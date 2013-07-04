@@ -1,12 +1,13 @@
 programa = instrucao+
-instrucao = (sp)* (declaracao/atribuicao/leia/escreva/se/enquanto) (sp)*
+instrucao = (sp)* (declaracao/atribuicao/leia/escreva/se/enquanto/para) (sp)*
 declaracao = declaracaoConstante / declaracaoVariavel
 declaracaoConstante = "CONSTANTE" sp+ identificadorCONSTANTE sp* "=" sp* expressao
-declaracaoVariavel = ("DECLARE"/"DECLARA") sp+ identificadorVariavel sp* 
+declaracaoVariavel = ("DECLARE"/"DECLARA") sp+ identificadorVariavel sp*
 ("," sp* identificadorVariavel)* ":" sp* tipo
 atribuicao = identificadorVariavel sp* "=" sp* expressao
 enquanto="ENQUANTO" expLogica "FAÇA" bloco "FIM_ENQUANTO"
 bloco = instrucao*
+para = "PARA" (sp)+ atribuicao "ATÉ" expressao "FAÇA" bloco "FIM_PARA"
 
 leia = "LEIA" sp+ identificadorVariavel
 escreva = "ESCREVA" sp+ (string/variavel)
